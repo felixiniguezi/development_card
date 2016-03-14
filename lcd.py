@@ -17,5 +17,5 @@ myLcd.setCursor(0,0)
 lugares = 0
 
 while (True):
-	myLcd.write("Lugares disponbles: " + lugares)
+	myLcd.write("Lugares disponbles: " + str(lugares))
 	lugares += 1
