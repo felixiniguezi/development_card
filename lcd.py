@@ -16,6 +16,6 @@ myLcd.setColor(90, 90, 255)
 myLcd.setCursor(0,0)
 lugares = 0
 
-while (TRUE):
+while (True):
 	myLcd.write("Lugares disponbles: " + lugares)
 	lugares += 1
