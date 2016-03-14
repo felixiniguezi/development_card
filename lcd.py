@@ -18,4 +18,4 @@ lugares = 0
 
 while TRUE:
 	myLcd.write("Lugares disponbles: " + lugares)
-	lugares++
+	lugares += 1
