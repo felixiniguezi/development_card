@@ -19,6 +19,6 @@ myLcd.setCursor(0,0)
 lugares = 0
 
 while (True):
-	myLcd.write("Disponbles: " + str(lugares))
+	myLcd.write("Disponbles: " + str(lugares) + "  ")
 	lugares += 1
 	time.sleep(0.5)
