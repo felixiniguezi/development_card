@@ -1,6 +1,8 @@
 import socket
 import fcntl
 import struct
+import time
+import mraa
 
 import pyupm_i2clcd as lcd
 
@@ -17,5 +19,6 @@ myLcd.setCursor(0,0)
 lugares = 0
 
 while (True):
-	myLcd.write("Lugares disponbles: " + str(lugares))
+	myLcd.write("Disponbles: " + str(lugares) + "  ")
 	lugares += 1
+	time.sleep(0.5)
