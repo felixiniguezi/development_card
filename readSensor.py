@@ -23,6 +23,11 @@ myLcd.clear()
 myLcd.setColor(90, 90, 255)
 myLcd.setCursor(0,0)
 
+#Limit flags
+
+RedFlag = 0
+YellowFlag = 10
+
 #Direccion of digital signals
 button.dir(mraa.DIR_IN)  
 touch.dir(mraa.DIR_IN)  
@@ -45,7 +50,24 @@ while True:
     if(touchState):
         lugares -= 1
 
+    #Red = 252, 18, 33
+    #Amarillo = 229, 220, 22
+    #Verde = 46, 254, 67
+
+    
+
+    if(lugares <= RedFlag):
+        myLcd.setColor(252, 18, 3)
+
+    else if(lugares <= YellowFlag):
+        myLcd.setColor(229, 220, 22)
+
+    else:
+        myLcd.setColor(46, 254, 67)
+
     messages = "Disponibles: " + str(lugares) + " "
     myLcd.setCursor(0,0)
     myLcd.write(messages)
-    time.sleep(0.5)
+
+    # Wait
+    time.sleep(0.3)
