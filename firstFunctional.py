@@ -52,7 +52,7 @@ while True:
         if(buttonState):
             lugares += 1
 
-    if(lastTouchState != touchState)
+    if(lastTouchState != touchState):
         if(touchState):
             lugares -= 1
 
