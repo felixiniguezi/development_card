@@ -59,7 +59,7 @@ while True:
     if(lugares <= RedFlag):
         myLcd.setColor(252, 18, 3)
 
-    else if(lugares <= YellowFlag):
+    elif(lugares <= YellowFlag):
         myLcd.setColor(229, 220, 22)
 
     else:
