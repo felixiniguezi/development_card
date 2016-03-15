@@ -45,7 +45,7 @@ while True:
     if(touchState):
         lugares -= 1
 
-    messages = "Disponibles: " + str(lugares) + "    \n\n"
+    messages = "Disponibles: " + str(lugares) + " "
     myLcd.setCursor(0,0)
     myLcd.write(messages)
-    time.sleep(0.3)
+    time.sleep(0.1)
