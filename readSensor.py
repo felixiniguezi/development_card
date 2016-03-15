@@ -1,22 +1,50 @@
 #!/usr/bin/python
-import mraa     # For accessing the GPIO
-import time     # For sleeping between blinks
+import socket
+import fcntl
+import struct
+import time
+import mraa
 
-BUTTON_GPIO = 5                   # we are using D5 pin
-button = mraa.Gpio(BUTTON_GPIO)  # Get the LED pin object
-button.dir(mraa.DIR_IN)     # Set the direction as output
+import pyupm_i2clcd as lcd
 
-led = mraa.Gpio(13)   
-led.dir(mraa.DIR_OUT)        
+#PIN numbers
+BUTTON_GPIO = 5      
+TOUCH_GPIO = 6  
+LED = 13   
+
+#Initialize Gpio objects
+button = mraa.Gpio(BUTTON_GPIO)  
+touch = mraa.Gpio(TOUCH_GPIO)
+led = mraa.Gpio(LED)
+
+# LCD Screen configuration
+myLcd = lcd.Jhd1313m1(0, 0x3E, 0x62)
+myLcd.clear()
+myLcd.setColor(90, 90, 255)
+myLcd.setCursor(0,0)
+
+#Direccion of digital signals
+button.dir(mraa.DIR_IN)  
+touch.dir(mraa.DIR_IN)  
+led.dir(mraa.DIR_OUT)
+    
+#Variables config
 led.write(0)
+lugares = 20
+messages = " "
+touchState = False
+buttonState = False
 
-# One infinite loop coming up
 while True:
-    if button.read() == 1:
-        # LED is off, turn it on
-        led.write(1)
+    buttonState = button.read();
+    touchState = touch.read();
 
-    else:
-        led.write(0)
+    if(buttonState)
+        lugares += 1
 
-    time.sleep(1)
+    if(touchState)
+        lugares -= 1
+
+    messages = "Disponibles: " + lugares + "    "
+    myLcd.write(messages)
+    time.sleep(0.3)
