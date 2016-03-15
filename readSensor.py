@@ -46,5 +46,6 @@ while True:
         lugares -= 1
 
     messages = "Disponibles: " + str(lugares) + "    \n\n"
+    myLcd.setCursor(0,0)
     myLcd.write(messages)
     time.sleep(0.3)
