@@ -35,7 +35,7 @@ led.dir(mraa.DIR_OUT)
     
 #Variables config
 led.write(0)
-lugares = 20
+lugares = 5
 messages = " "
 touchState = False
 buttonState = False
@@ -80,4 +80,4 @@ while True:
 
 
     # Wait
-    time.sleep(0.3)
+    time.sleep(0.1)
