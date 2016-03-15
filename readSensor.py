@@ -48,4 +48,4 @@ while True:
     messages = "Disponibles: " + str(lugares) + " "
     myLcd.setCursor(0,0)
     myLcd.write(messages)
-    time.sleep(0.1)
+    time.sleep(0.5)
