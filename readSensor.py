@@ -39,10 +39,10 @@ while True:
     buttonState = button.read();
     touchState = touch.read();
 
-    if(buttonState)
+    if(buttonState == 1)
         lugares += 1
 
-    if(touchState)
+    if(touchState == 1)
         lugares -= 1
 
     messages = "Disponibles: " + lugares + "    "
