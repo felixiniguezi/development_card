@@ -4,6 +4,7 @@ import fcntl
 import struct
 import time
 import mraa
+import requests
 
 import pyupm_i2clcd as lcd
 
@@ -42,6 +43,10 @@ buttonState = False
 lastButtonState = False
 lastTouchState = False
 
+
+urlReserve = "http://10.43.51.167:5000/sections/1/reserve/1"
+urlFree = "http://10.43.51.167:5000/sections/1/free/1"
+
 while True:
 
     #------- Button and Touch control
@@ -51,10 +56,21 @@ while True:
     if(lastButtonState != buttonState):
         if(buttonState):
             lugares += 1
+            r = requests.get(urlReserve)
+            print r.status_code
+            print r.headers
+            print r.encoding
+            print r.text
 
     if(lastTouchState != touchState):
         if(touchState):
             lugares -= 1
+            r = requests.get(urlFree)
+            print r.status_code
+            print r.headers
+            print r.encoding
+            print r.text
+
 
     lastTouchState = touchState
     lastButtonState = buttonState
