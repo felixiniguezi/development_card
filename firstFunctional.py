@@ -13,6 +13,10 @@ BUTTON_GPIO = 5
 TOUCH_GPIO = 6  
 LED = 13   
 
+#Limits
+MAX = 20
+MIN = 0
+
 #Initialize Gpio objects
 button = mraa.Gpio(BUTTON_GPIO)  
 touch = mraa.Gpio(TOUCH_GPIO)
@@ -54,7 +58,7 @@ while True:
     touchState = touch.read() == 1;
 
     if(lastButtonState != buttonState):
-        if(buttonState):
+        if(buttonState and lugares < MAX):
             lugares += 1
             r = requests.get(urlReserve)
             print r.status_code
@@ -63,7 +67,7 @@ while True:
             print r.text
 
     if(lastTouchState != touchState):
-        if(touchState):
+        if(touchState and lugares>MIN):
             lugares -= 1
             r = requests.get(urlFree)
             print r.status_code
