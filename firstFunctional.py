@@ -39,22 +39,31 @@ lugares = 20
 messages = " "
 touchState = False
 buttonState = False
+lastButtonState = False
+lastTouchState = False
 
 while True:
+
+    #------- Button and Touch control
     buttonState = button.read() == 1;
     touchState = touch.read() == 1;
 
-    if(buttonState):
-        lugares += 1
+    if(lastButtonState != buttonState):
+        if(buttonState):
+            lugares += 1
 
-    if(touchState):
-        lugares -= 1
+    if(lastTouchState != touchState)
+        if(touchState):
+            lugares -= 1
 
-    #Red = 252, 18, 33
-    #Amarillo = 229, 220, 22
-    #Verde = 46, 254, 67
+    lastTouchState = touchState
+    lastButtonState = buttonState
 
-    
+
+    # ------ LCD -------
+        #Red = 252, 18, 33
+        #Amarillo = 229, 220, 22
+        #Verde = 46, 254, 67
 
     if(lugares <= RedFlag):
         myLcd.setColor(252, 18, 3)
@@ -68,6 +77,7 @@ while True:
     messages = "Disponibles: " + str(lugares) + " "
     myLcd.setCursor(0,0)
     myLcd.write(messages)
+
 
     # Wait
     time.sleep(0.3)
