@@ -59,21 +59,25 @@ while True:
 
     if(lastButtonState != buttonState):
         if(buttonState and lugares < MAX):
-            lugares += 1
             r = requests.get(urlReserve)
             print r.status_code
             print r.headers
             print r.encoding
-            print r.text
+            print r.json
+            lugares = r.json.capacity
+
+
 
     if(lastTouchState != touchState):
         if(touchState and lugares>MIN):
-            lugares -= 1
             r = requests.get(urlFree)
+
             print r.status_code
             print r.headers
             print r.encoding
-            print r.text
+            print r.json
+            lugares = r.json.capacity
+
 
 
     lastTouchState = touchState
