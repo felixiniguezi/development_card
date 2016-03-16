@@ -5,6 +5,7 @@ import struct
 import time
 import mraa
 import requests
+import json
 
 import pyupm_i2clcd as lcd
 
@@ -12,10 +13,6 @@ import pyupm_i2clcd as lcd
 BUTTON_GPIO = 5      
 TOUCH_GPIO = 6  
 LED = 13   
-
-#Limits
-MAX = 20
-MIN = 0
 
 #Initialize Gpio objects
 button = mraa.Gpio(BUTTON_GPIO)  
@@ -29,9 +26,7 @@ myLcd.setColor(90, 90, 255)
 myLcd.setCursor(0,0)
 
 #Limit flags
-
-RedFlag = 0
-YellowFlag = 10
+MAX = 200
 
 #Direccion of digital signals
 button.dir(mraa.DIR_IN)  
@@ -40,13 +35,17 @@ led.dir(mraa.DIR_OUT)
     
 #Variables config
 led.write(0)
-lugares = 5
+lugares = None
 messages = " "
 touchState = False
 buttonState = False
 lastButtonState = False
 lastTouchState = False
 
+
+r = requests.get("http://10.43.51.167:5000/sections/1")
+content = json.loads(r.text)
+lugares = content['capacity']
 
 urlReserve = "http://10.43.51.167:5000/sections/1/reserve/1"
 urlFree = "http://10.43.51.167:5000/sections/1/free/1"
@@ -58,25 +57,20 @@ while True:
     touchState = touch.read() == 1;
 
     if(lastButtonState != buttonState):
-        if(buttonState and lugares < MAX):
-            r = requests.get(urlReserve)
-            print r.status_code
-            print r.headers
-            print r.encoding
-            print r.json
-            lugares = r.json.capacity
+        if(buttonState):
+            r = requests.get(urlFree)
+            print r.text
+            content = json.loads(r.text)
+            lugares = content['capacity']
 
 
 
     if(lastTouchState != touchState):
-        if(touchState and lugares>MIN):
-            r = requests.get(urlFree)
-
-            print r.status_code
-            print r.headers
-            print r.encoding
-            print r.json
-            lugares = r.json.capacity
+        if(touchState):
+            r = requests.get(urlReserve)
+            print r.text
+            content = json.loads(r.text)
+            lugares = content['capacity']
 
 
 
@@ -89,17 +83,16 @@ while True:
         #Amarillo = 229, 220, 22
         #Verde = 46, 254, 67
 
-    if(lugares <= RedFlag):
-        myLcd.setColor(252, 18, 3)
+    green = lugares * (255/MAX)
+    red = (MAX - lugares) * (255/MAX)
 
-    elif(lugares <= YellowFlag):
-        myLcd.setColor(229, 220, 22)
-
-    else:
-        myLcd.setColor(46, 254, 67)
+    print "Lugares: " + lugares + " Color " + str(red) + ", " + str(green)
+    myLcd.setColor(red, green, 0)
 
     messages = "Disponibles: " + str(lugares) + " "
-    myLcd.setCursor(0,0)
+    myLcd.setCursor(0,5)
+    myLcd.write("Zona A")
+    myLcd.setCursor(1,0)
     myLcd.write(messages)
 
 
