@@ -43,12 +43,12 @@ lastButtonState = False
 lastTouchState = False
 
 
-r = requests.get("http://10.43.51.167:5000/sections/1")
+r = requests.get("http://10.43.51.167:5000/sections/P_Residencias")
 content = json.loads(r.text)
 lugares = content['capacity']
 
-urlReserve = "http://10.43.51.167:5000/sections/1/reserve/1"
-urlFree = "http://10.43.51.167:5000/sections/1/free/1"
+urlReserve = "http://10.43.51.167:5000/sections/P_Residencias/reserve/1"
+urlFree = "http://10.43.51.167:5000/sections/P_Residencias/free/1"
 
 while True:
 
